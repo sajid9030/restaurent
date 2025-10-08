@@ -1,0 +1,38 @@
+<% layout('layout') -%>
+<h3>Admin - Orders</h3>
+<table class="table table-striped">
+  <thead>
+    <tr><th>ID</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Status</th><th>Created</th><th>Action</th></tr>
+  </thead>
+  <tbody>
+    <% orders.forEach(o => { %>
+      <tr>
+        <td><%= o.id %></td>
+        <td><%= o.customer_name %></td>
+        <td><%= o.phone %></td>
+        <td>
+          <ul>
+            <% o.items_parsed.forEach(i=>{ %>
+              <li><%= i.name %> × <%= i.qty %></li>
+            <% }) %>
+          </ul>
+        </td>
+        <td>$<%= parseFloat(o.total).toFixed(2) %></td>
+        <td><%= o.status %></td>
+        <td><%= o.created_at %></td>
+        <td>
+          <form method="post" action="/admin/orders/<%= o.id %>/status" style="display:inline-block;">
+            <select name="status" class="form-select form-select-sm mb-1">
+              <option value="new" <%= o.status==='new'?'selected':'' %>>new</option>
+              <option value="preparing" <%= o.status==='preparing'?'selected':'' %>>preparing</option>
+              <option value="ready" <%= o.status==='ready'?'selected':'' %>>ready</option>
+              <option value="delivered" <%= o.status==='delivered'?'selected':'' %>>delivered</option>
+              <option value="cancelled" <%= o.status==='cancelled'?'selected':'' %>>cancelled</option>
+            </select>
+            <button class="btn btn-sm btn-primary mt-1" type="submit">Update</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
