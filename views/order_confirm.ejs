@@ -1,0 +1,13 @@
+<% layout('layout') -%>
+<h3>Order #<%= order.id %> received</h3>
+<p><strong>Name:</strong> <%= order.customer_name %></p>
+<p><strong>Phone:</strong> <%= order.phone %></p>
+<p><strong>Status:</strong> <%= order.status %></p>
+<h5>Items</h5>
+<ul>
+  <% items.forEach(it => { %>
+    <li><%= it.name %> × <%= it.qty %> — $<%= (it.price * it.qty).toFixed(2) %></li>
+  <% }) %>
+</ul>
+<p><strong>Total:</strong> $<%= parseFloat(order.total).toFixed(2) %></p>
+<p><a href="/">Back to menu</a></p>
